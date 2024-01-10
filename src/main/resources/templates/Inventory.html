@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- TITLE -->	
+	<title>Inventory</title>
+
+<!-- HEAD CONTENT -->		
+    <div th:replace="~{fragments/head :: head}"></div>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+ 	<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- SIDEBAR -->
+ 	<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<!-- MAIN -->
+<main id="main" class="main">
+
+	<div class="pagetitle">
+		<h1>Inventory</h1>
+	</div>
+
+	<section class="section">
+		<div class="row">
+			<div class="card">
+				<div class="card-body">
+
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add Inventory</button>
+              
+<!-- TABLE -->
+				<table class="table datatable">
+					<thead>
+						<tr>
+							<th>Supplier</th>
+							<th>Type/Description</th>
+							<th>Material</th>
+							<th>Diameter (mm or ")</th>
+							<th>Quantity</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="inventory:${inventory}">
+							<td th:text="${inventory.supplier.company}"></td>
+							<td th:text="${inventory.type}"></td>
+							<td th:text="${inventory.material}"></td>
+							<td th:text="${inventory.diameter}"></td>
+							<td th:text="${inventory.quantity}"></td>
+							<td>
+								<div class="btn-group">
+									<a th:href="@{/inventory/findById(id=${inventory.id})}" class="btn btn-primary" id="editButton"
+									data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
+									
+									<a th:href="@{/inventory/delete(id=${inventory.id})}" class="btn btn-danger" id="deleteButton"
+									data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>						     
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+<!-- END TABLE -->
+		
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+<!-- END MAIN -->
+
+<!-- ADD MODAL -->
+	<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="addModalLabel">New Inventory</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <form th:action="@{/inventory/addNew}" method="post">
+     
+			<div class="mb-3">
+				<label for="supplier" class="col-form-label">Supplier: </label>
+					<select class="form-control" id="ddlsupplier" name="supplierid">
+						<option>Select</option>			    
+						<option th:each="suppliers : ${suppliers}"
+							th:value="${suppliers.id}"
+							th:text="${suppliers.company}">
+						</option>
+					</select>				    
+			</div>
+	          	          
+	          <div class="mb-3">
+	            <label for="type" class="col-form-label">Type/Description:</label>
+	            <input type="text" class="form-control" id="typeAdd" name="type" required>
+	          </div>
+	          
+	          <div class="mb-3">
+	            <label for="material" class="col-form-label">Material:</label>
+	            <input type="text" class="form-control" id="materialAdd" name="material" required>
+	          </div>
+	          
+	          <div class="mb-3">
+	            <label for="diameter" class="col-form-label">Diameter (mm or "):</label>
+	            <input type="text" class="form-control" id="diameterAdd" name="diameter">
+	          </div>
+
+	          <div class="mb-3">
+	            <label for="quantity" class="col-form-label">Quantity:</label>
+	            <input type="text" class="form-control" id="quantitytAdd" name="quantity" required>
+	          </div>
+	  
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+	        <button type="submit" class="btn btn-primary">Submit</button>
+	      </div>
+	    </div>
+	  </div>
+	</form>
+	</div>
+<!-- END ADD MODAL -->
+
+<!-- EDIT MODAL -->
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+	 <form th:action="@{/inventory/update}" method="put"> 
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="editModalLabel">Edit Inventory Data</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+
+	          <div class="form-group">
+	            <label for="id" class="col-form-label">Id:</label>
+	            <input type="text" class="form-control" id="idEdit" name="id" readonly>
+	          </div>
+	
+			<div class="form-group">
+				<label for="supplier" class="col-form-label">Supplier: </label>
+					<select class="form-control" id="ddlsupplierEdit" name="supplierid">
+						<option>Select</option>			    
+						<option th:each="suppliers : ${suppliers}"
+							th:value="${suppliers.id}"
+							th:text="${suppliers.company}">
+						</option>
+					</select>				    
+			</div>
+	          
+	          <div class="form-group">
+	            <input type="hidden" class="form-control" id="typeEdit" name="type" required>
+	          </div>  
+	          
+	          <div class="form-group">
+	            <label for="material" class="col-form-label">Material:</label>
+	            <input type="text" class="form-control" id="materialEdit" name="material" required>
+	          </div>
+	          
+	          <div class="form-group">
+	            <label for="diameter" class="col-form-label">Diameter (mm or "):</label>
+	            <input type="text" class="form-control" id="diameterEdit" name="diameter">
+	          </div>
+	          
+	          <div class="form-group">
+	            <label for="quantity" class="col-form-label">Quantity:</label>
+	            <input type="text" class="form-control" id="quantityEdit" name="quantity" required>
+	          </div>              
+	                 
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+	        <button type="submit" class="btn btn-primary">Save</button>
+	      </div>
+	    </div>
+	  </div>
+	</form>
+	</div>
+<!-- END EDIT MODAL -->
+
+<!-- DELETE MODAL -->
+    <div th:replace="~{fragments/delete :: delete}"></div>	
+
+<!-- BACK TO TOP -->
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- JAVASCRIPT -->
+<div th:replace="~{fragments/javascript :: javascript}"></div>
+<script src="assets/js/inventory.js"></script>
+
+</body>
+
+</html>

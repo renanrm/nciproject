@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- TITLE -->	
+	<title>Error</title>
+
+<!-- HEAD CONTENT -->		
+    <div th:replace="~{fragments/head :: head}"></div>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+ 	<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- SIDEBAR -->
+ 	<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<!-- MAIN -->
+<main id="main" class="main">
+	<section class="section">
+		<div class="row">
+			<div class="card">
+				<div class="card-body">
+	
+					<h1>Something went wrong!</h1>
+					<p>An error has occurred or you might not have permission to use this resource
+					<br>Please select an option from the sidebar.</p>
+
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+<!-- END MAIN -->
+
+<!-- BACK TO TOP -->
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- JAVASCRIPT -->
+<div th:replace="~{fragments/javascript :: javascript}"></div>
+<script src="assets/js/clients.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- TITLE -->	
+	<title>Service Authorizations</title>
+
+<!-- HEAD CONTENT -->		
+    <div th:replace="~{fragments/head :: head}"></div>	
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+ 	<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- SIDEBAR -->
+ 	<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<!-- MAIN -->
+<main id="main" class="main">
+
+	<div class="pagetitle">
+		<h1>Service Authorizations</h1>
+	</div>
+
+	<section class="section">
+		<div class="row">
+			<div class="card">
+				<div class="card-body">
+
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add Service Authorization</button>
+              
+<!-- TABLE -->
+				<table class="table datatable">
+					<thead>
+						<tr>
+							<th>Client</th>
+							<th>Contract</th>
+							<th>Number</th>
+							<th>Date</th>
+							<th>Address</th>
+							<th>Type</th>
+							<th>Estimate Length (m)</th>
+							<th>Estimate Cost</th>
+							<th>Deadline</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="serviceAuth:${serviceauthorizations}">
+							<td th:text="${serviceAuth.client}"></td>
+							<td th:text="${serviceAuth.contract}"></td>
+							<td th:text="${serviceAuth.number}"></td>
+							<td th:text="${serviceAuth.date}"></td>
+							<td th:text="${serviceAuth.address}"></td>
+							<td th:text="${serviceAuth.type}"></td>
+							<td th:text="${serviceAuth.estimateLength}"></td>
+							<td th:text="${serviceAuth.estimateCost}"></td>
+							<td th:text="${serviceAuth.deadline}"></td>
+							<td>
+								<div class="btn-group">
+									<a th:href="@{/serviceauthorizations/findById(id=${serviceAuth.id})}" class="btn btn-primary" id="editButton"
+									data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
+									
+									<a th:href="@{/serviceauthorizations/delete(id=${serviceAuth.id})}" class="btn btn-danger" id="deleteButton"
+									data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>						     
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+<!-- END TABLE -->
+
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+<!-- END MAIN -->
+
+<!-- ADD MODAL -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">New Service Authorization</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form th:action="@{/serviceauthorizations/addNew}" method="post">
+          
+          <div class="mb-3">
+            <label for="client" class="col-form-label">Client:</label>
+            <input type="text" class="form-control" id="clientAdd" name="client" required>
+          </div>
+ 
+          <div class="mb-3">
+            <label for="contract" class="col-form-label">Contract:</label>
+            <input type="text" class="form-control" id="contractAdd" name="contract">
+          </div>
+          
+          <div class="mb-3">
+            <label for="number" class="col-form-label">Number:</label>
+            <input type="text" class="form-control" id="numberAdd" name="number" required>
+          </div>
+          
+          <div class="mb-3">
+            <label for="date" class="col-form-label">Date:</label>
+            <input type="date" class="form-control" id="dateAdd" name="date" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="zipCode" class="col-form-label">Zip Code:</label>
+            <input type="text" class="form-control" id="zipCodeAdd" name="zipCode">
+          </div>
+
+          <div class="mb-3">
+            <label for="address" class="col-form-label">Address:</label>
+            <input type="text" class="form-control" id="addressAdd" name="address">
+          </div>
+          
+          <div class="mb-3">
+            <label for="type" class="col-form-label">Type:</label>
+            <input type="text" class="form-control" id="typeAdd" name="type">
+          </div>
+          
+          <div class="mb-3">
+            <label for="estimateLength" class="col-form-label">Estimate Length (m):</label>
+            <input type="text" class="form-control" id="estimateLengthAdd" name="estimateLength">
+          </div>
+          
+          <div class="mb-3">
+            <label for="estimateCost" class="col-form-label">Estimate Cost:</label>
+            <input type="text" class="form-control" id="estimateCostAdd" name="estimateCost">
+          </div>
+          
+          <div class="mb-3">
+            <label for="deadline" class="col-form-label">Deadline:</label>
+            <input type="date" class="form-control" id="deadlineAdd" name="deadline" required>
+          </div>
+  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+<!-- END ADD MODAL -->
+
+<!-- EDIT MODAL -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+ <form th:action="@{/serviceauthorizations/update}" method="put"> 
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Service Authorization Data</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+          <div class="form-group">
+            <input type="hidden" class="form-control" id="idEdit" name="id" readonly>
+          </div>
+
+          <div class="form-group">
+            <label for="client" class="col-form-label">Client:</label>
+            <input type="text" class="form-control" id="clientEdit" name="client" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="contract" class="col-form-label">Contract:</label>
+            <input type="text" class="form-control" id="contractEdit" name="contract">
+          </div>  
+          
+          <div class="form-group">
+            <label for="number" class="col-form-label">Number:</label>
+            <input type="text" class="form-control" id="numberEdit" name="number" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="date" class="col-form-label">Date:</label>
+            <input type="date" class="form-control" id="dateEdit" name="date" required>
+          </div>
+         
+          <div class="form-group">
+            <label for="address" class="col-form-label">Address:</label>
+            <input type="text" class="form-control" id="addressEdit" name="address">
+          </div>              
+
+          <div class="form-group">
+            <label for="type" class="col-form-label">Type:</label>
+            <input type="text" class="form-control" id="typeEdit" name="type">
+          </div>  
+          
+          <div class="form-group">
+            <label for="estimateLength" class="col-form-label">Estimate Length (m):</label>
+            <input type="text" class="form-control" id="estimateLengthEdit" name="estimateLength">
+          </div>
+          
+          <div class="form-group">
+            <label for="estimateCost" class="col-form-label">Estimate Cost:</label>
+            <input type="text" class="form-control" id="estimateCostEdit" name="estimateCost">
+          </div>
+          
+          <div class="form-group">
+            <label for="deadline" class="col-form-label">Deadline:</label>
+            <input type="date" class="form-control" id="deadlineEdit" name="deadline" required>
+          </div>              
+               
+                 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+<!-- END EDIT MODAL -->
+
+<!-- DELETE MODAL -->
+    <div th:replace="~{fragments/delete :: delete}"></div>	
+
+<!-- BACK TO TOP -->
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- JAVASCRIPT -->
+<div th:replace="~{fragments/javascript :: javascript}"></div>
+<script src="assets/js/serviceAuth.js"></script>
+
+</body>
+
+</html>

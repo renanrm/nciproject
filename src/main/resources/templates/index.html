@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- TITLE -->	
+	<title>BuildMate</title>
+
+<!-- HEAD CONTENT -->		
+    <div th:replace="~{fragments/head :: head}"></div>	
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+ 	<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- SIDEBAR -->
+ 	<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<!-- MAIN -->
+<main id="main" class="main">
+	<section class="section">
+		<div class="row">
+			<div class="card">
+				<div class="card-body">
+	
+					<h1>Welcome to BuildMate!</h1>
+					<h5>Please get started by selecting an option from the sidebar.</h5>
+
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+<!-- END MAIN -->
+
+<!-- BACK TO TOP -->
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- JAVASCRIPT -->
+<div th:replace="~{fragments/javascript :: javascript}"></div>
+<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
